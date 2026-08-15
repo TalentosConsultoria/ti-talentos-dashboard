@@ -93,12 +93,22 @@ def login_page(auth_url: str):
     st.stop()
 
 
+def _azure_configurado() -> bool:
+    return bool(_cfg("AZURE_CLIENT_ID") and _cfg("AZURE_CLIENT_SECRET") and _cfg("AZURE_TENANT_ID"))
+
+
 def verificar_autenticacao() -> dict:
     """
     Verifica se o usuário está autenticado.
-    - Se não estiver → exibe tela de login e para a execução.
+    - Se credenciais Azure não configuradas → modo sem login (acesso direto).
+    - Se não estiver autenticado → exibe tela de login Microsoft.
     - Se estiver → retorna o dicionário com dados do usuário.
     """
+    if not _azure_configurado():
+        if "user" not in st.session_state:
+            st.session_state["user"] = {"name": "Administrador", "preferred_username": "admin@local"}
+        return st.session_state["user"]
+
     # Captura o código de retorno do Microsoft (após o redirect)
     params = st.query_params
     if "code" in params and "user" not in st.session_state:
