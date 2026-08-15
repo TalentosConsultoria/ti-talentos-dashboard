@@ -104,31 +104,34 @@ def verificar_autenticacao() -> dict:
     - Se não estiver autenticado → exibe tela de login Microsoft.
     - Se estiver → retorna o dicionário com dados do usuário.
     """
+    _sem_auth = {"name": "Administrador", "preferred_username": "admin@local"}
+
     if not _azure_configurado():
-        if "user" not in st.session_state:
-            st.session_state["user"] = {"name": "Administrador", "preferred_username": "admin@local"}
+        st.session_state.setdefault("user", _sem_auth)
         return st.session_state["user"]
 
-    # Captura o código de retorno do Microsoft (após o redirect)
-    params = st.query_params
-    if "code" in params and "user" not in st.session_state:
-        with st.spinner("Autenticando..."):
-            result = _trocar_codigo(params["code"])
-        if result:
-            claims = result.get("id_token_claims", {})
-            email  = claims.get("preferred_username", "")
-            domain = _cfg("ALLOWED_DOMAIN")
-            if domain and not email.endswith(f"@{domain}"):
-                st.error(f"Acesso negado. Apenas usuários @{domain} podem entrar.")
+    try:
+        params = st.query_params
+        if "code" in params and "user" not in st.session_state:
+            with st.spinner("Autenticando..."):
+                result = _trocar_codigo(params["code"])
+            if result:
+                claims = result.get("id_token_claims", {})
+                email  = claims.get("preferred_username", "")
+                domain = _cfg("ALLOWED_DOMAIN")
+                if domain and not email.endswith(f"@{domain}"):
+                    st.error(f"Acesso negado. Apenas usuários @{domain} podem entrar.")
+                    st.query_params.clear()
+                    st.stop()
+                st.session_state["user"]  = claims
+                st.session_state["token"] = result.get("access_token", "")
                 st.query_params.clear()
-                st.stop()
-            st.session_state["user"]  = claims
-            st.session_state["token"] = result.get("access_token", "")
-            st.query_params.clear()
-            st.rerun()
+                st.rerun()
 
-    if "user" not in st.session_state:
-        login_page(_auth_url())
+        if "user" not in st.session_state:
+            login_page(_auth_url())
+    except Exception:
+        st.session_state.setdefault("user", _sem_auth)
 
     return st.session_state["user"]
 
