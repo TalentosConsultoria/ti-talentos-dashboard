@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+
+# Certificados e chaves (nunca subir)
+*.pfx
+*.p12
+*.pem
+*.key
+*.crt
+
+# NF-es arquivadas (documentos fiscais — dados sensíveis)
+NF-es/
+
+# Streamlit local
+.streamlit/secrets.toml
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

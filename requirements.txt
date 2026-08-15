@@ -6,3 +6,4 @@ cryptography>=42.0
 signxml>=3.2
 lxml>=5.2
 reportlab>=4.2
+msal>=1.28

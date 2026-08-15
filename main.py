@@ -3,6 +3,7 @@ Dashboard de Inventário de TI — Talentos Consultoria
 Execução: streamlit run main.py
 """
 import streamlit as st
+from auth import verificar_autenticacao
 
 st.set_page_config(
     page_title="TI Talentos — Inventário",
@@ -23,6 +24,16 @@ st.markdown("""
 .stMetric { background: #EEF3F9; border-radius: 8px; padding: 12px; }
 </style>
 """, unsafe_allow_html=True)
+
+user = verificar_autenticacao()
+
+# Botão de logout no sidebar
+with st.sidebar:
+    nome = user.get("name", user.get("preferred_username", "Usuário"))
+    st.caption(f"👤 {nome}")
+    if st.button("Sair", use_container_width=True):
+        from auth import logout
+        logout()
 
 pages = {
     "Inventário": [
