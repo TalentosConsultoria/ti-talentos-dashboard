@@ -11,7 +11,7 @@ st.title("📊 Relatórios")
 sb  = get_client()
 tab1, tab2 = st.tabs(["📄 Ficha do Equipamento (PDF)", "📈 Parque de TI"])
 
-SCRIPTS = Path(__file__).parent.parent.parent / "scripts"
+SCRIPTS = Path(__file__).parent.parent / "scripts"
 
 # ── Ficha PDF ─────────────────────────────────────────────────────────────────
 with tab1:

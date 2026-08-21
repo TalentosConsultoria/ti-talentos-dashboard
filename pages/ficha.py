@@ -99,7 +99,7 @@ with tab1:
     if st.button("📥 Gerar ficha PDF", type="secondary"):
         import subprocess, sys
         from pathlib import Path
-        script = Path(__file__).parent.parent.parent / "scripts" / "gerar_relatorio.py"
+        script = Path(__file__).parent.parent / "scripts" / "gerar_relatorio.py"
         saida  = f"ficha_{controle}.pdf"
         res = subprocess.run([sys.executable, str(script), "--controle", controle, "--saida", saida],
                              capture_output=True, text=True)
