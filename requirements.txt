@@ -1,8 +1,9 @@
-streamlit>=1.35
+streamlit>=1.37
 supabase>=2.4
 pandas>=2.0
 requests>=2.31
 cryptography>=42.0
+PyJWT>=2.8
 signxml>=3.2
 lxml>=5.2
 reportlab>=4.2

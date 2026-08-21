@@ -5,14 +5,30 @@ from supabase import create_client, Client
 from datetime import date
 
 
+def _exigir_sessao_autenticada() -> None:
+    """
+    Defesa em profundidade: nenhuma página toca o banco sem que main.py
+    tenha autenticado a requisição. Se o guard de auth for removido ou
+    contornado, o acesso a dados falha fechado.
+    """
+    if not st.session_state.get("user"):
+        st.error("Sessão não autenticada. Acesse o portal pelo endereço oficial.")
+        st.stop()
+
+
 @st.cache_resource(show_spinner=False)
+def _criar_client(url: str, key: str) -> Client:
+    return create_client(url, key)
+
+
 def get_client() -> Client:
+    _exigir_sessao_autenticada()
     url = os.environ.get("SUPABASE_URL", "")
     key = os.environ.get("SUPABASE_KEY", "")
     if not url or not key:
         st.error("Variáveis SUPABASE_URL e SUPABASE_KEY não configuradas.")
         st.stop()
-    return create_client(url, key)
+    return _criar_client(url, key)
 
 
 def equipamentos_lista(sb: Client, *, obsoletos=False, tipo=None, local=None, busca=None):

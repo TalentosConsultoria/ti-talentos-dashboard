@@ -1,0 +1,71 @@
+# Blueprint do Render.com — Portal TI Talentos
+# Repositorio: TalentosConsultoria/ti-talentos-dashboard
+# A raiz do repositorio E a pasta do app (main.py na raiz).
+services:
+  - type: web
+    name: ti-talentos-dashboard
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: >-
+      streamlit run main.py
+      --server.port $PORT
+      --server.address 0.0.0.0
+      --server.headless true
+      --server.enableXsrfProtection true
+      --browser.gatherUsageStats false
+      --client.toolbarMode minimal
+
+    # Render checa este path direto no *.onrender.com (sem passar pelo
+    # Cloudflare). E um endpoint interno do Streamlit, nao expoe dados.
+    healthCheckPath: /_stcore/health
+
+    envVars:
+      # --- Modo de autenticacao -------------------------------------------
+      # cloudflare = Cloudflare Access e o unico gatekeeper (Opcao A).
+      # O app valida o JWT Cf-Access-Jwt-Assertion e recusa acesso direto
+      # ao *.onrender.com.
+      - key: AUTH_MODE
+        value: cloudflare
+
+      - key: ENVIRONMENT
+        value: production
+
+      # --- Cloudflare Access (OBRIGATORIOS no modo cloudflare) ------------
+      # Team domain, ex.: talentos.cloudflareaccess.com
+      - key: CF_ACCESS_TEAM_DOMAIN
+        sync: false
+      # Application Audience (AUD) tag da Access App "Portal TI Talentos"
+      - key: CF_ACCESS_AUD
+        sync: false
+
+      # --- Allowlist no app (defesa em profundidade) ----------------------
+      - key: ALLOWED_EMAILS
+        value: informatica@talentosconsultoria.com.br
+      - key: ALLOWED_DOMAIN
+        value: talentosconsultoria.com.br
+
+      # --- Supabase (chave publishable; NUNCA a service_role) -------------
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+
+      # --- Microsoft Entra ID -------------------------------------------
+      # NAO preencher na Opcao A. Existem apenas para permitir trocar
+      # AUTH_MODE=azure sem alterar codigo.
+      - key: AZURE_CLIENT_ID
+        sync: false
+      - key: AZURE_TENANT_ID
+        sync: false
+      - key: AZURE_CLIENT_SECRET
+        sync: false
+      - key: REDIRECT_URI
+        sync: false
+
+      - key: PYTHON_VERSION
+        value: "3.12"
