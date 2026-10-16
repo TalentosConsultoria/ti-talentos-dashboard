@@ -4,6 +4,19 @@ import pandas as pd
 from datetime import date, timedelta
 from utils.db import get_client, equipamentos_lista, garantia_efetiva, dias_restantes
 
+def _fmt_periodo(dias: int) -> str:
+    dias = abs(dias)
+    anos = dias // 365
+    meses = (dias % 365) // 30
+    if anos and meses:
+        return f"{anos}a {meses}m"
+    if anos:
+        return f"{anos}a"
+    if meses:
+        return f"{meses}m"
+    return f"{dias}d"
+
+
 st.title("🛡️ Garantias")
 
 sb = get_client()
@@ -49,7 +62,7 @@ def tabela_gar(lista, *, is_vencida=False):
             "Fornecedor":r.get("fornecedor",""),
             "Tipo Gar.": r.get("_origem",""),
             "Vence em":  fmt_date(r.get("_data")),
-            "Situação":  (f"há {abs(d)} dias" if d < 0 else f"em {d} dias"),
+            "Situação":  (f"há {_fmt_periodo(d)}" if d < 0 else f"em {_fmt_periodo(d)}"),
         })
     if data:
         df = pd.DataFrame(data)

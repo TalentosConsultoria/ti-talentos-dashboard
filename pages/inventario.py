@@ -53,13 +53,26 @@ def fmt_date(v):
         return str(v)
 
 
+def _fmt_periodo(dias: int) -> str:
+    dias = abs(dias)
+    anos = dias // 365
+    meses = (dias % 365) // 30
+    if anos and meses:
+        return f"{anos}a {meses}m"
+    if anos:
+        return f"{anos}a"
+    if meses:
+        return f"{meses}m"
+    return f"{dias}d"
+
+
 def gar_label(row):
     d, origem = garantia_efetiva(row)
     dias = dias_restantes(d)
     if dias is None: return "—"
-    if dias < 0:     return f"🔴 Vencida há {abs(dias)}d ({origem})"
-    if dias <= 90:   return f"🟡 {dias}d ({origem})"
-    return f"🟢 {dias}d ({origem})"
+    if dias < 0:     return f"🔴 Vencida há {_fmt_periodo(dias)} ({origem})"
+    if dias <= 90:   return f"🟡 {_fmt_periodo(dias)} ({origem})"
+    return f"🟢 {_fmt_periodo(dias)} ({origem})"
 
 
 df_data = []
@@ -86,6 +99,7 @@ else:
         df,
         use_container_width=True,
         hide_index=True,
+        height=600,
         selection_mode="single-row",
         on_select="rerun",
         column_config={
