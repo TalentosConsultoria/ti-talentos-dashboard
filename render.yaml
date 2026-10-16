@@ -49,10 +49,9 @@ services:
       - key: ALLOWED_DOMAIN
         value: talentosconsultoria.com.br
 
-      # --- Supabase (chave publishable; NUNCA a service_role) -------------
-      - key: SUPABASE_URL
-        sync: false
-      - key: SUPABASE_KEY
+      # --- Firebase / Firestore -------------------------------------------
+      # Cole o conteúdo COMPLETO do serviceAccountKey.json como valor
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
         sync: false
 
       # --- Microsoft Entra ID -------------------------------------------

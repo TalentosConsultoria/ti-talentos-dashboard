@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import date
-from utils.db import get_client, equipamentos_lista, equipamento_get, pecas_get, pecas_insert
+from utils.db import get_client, equipamentos_lista, equipamento_get, pecas_get, pecas_insert, pecas_historico_completo
 from utils.nf_utils import parse_chave, baixar_via_api_livre, baixar_via_certificado, pasta_nf
 
 st.title("🔧 Peças Trocadas")
@@ -82,14 +82,8 @@ with tab_hist:
 
     busca = st.text_input("Filtrar por TAL, peça ou fornecedor", placeholder="ex: RAM ou TAL0045")
 
-    # Busca todas as peças via join
-    try:
-        res = sb.table("historico_pecas").select(
-            "*, equipamentos(controle, tipo, marca, modelo, local, usuario)"
-        ).order("data", desc=True).execute()
-        todas = res.data or []
-    except Exception:
-        todas = []
+    # Busca todas as peças com dados do equipamento
+    todas = pecas_historico_completo(sb)
 
     def fmt_date(v):
         if not v: return "—"

@@ -1,5 +1,5 @@
 streamlit>=1.37
-supabase>=2.4
+firebase-admin>=6.0
 pandas>=2.0
 requests>=2.31
 cryptography>=42.0
