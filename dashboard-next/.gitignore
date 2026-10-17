@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Segredos
+.env
+.env.local
+.env.*.local
+serviceAccountKey.json
+*.pem
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

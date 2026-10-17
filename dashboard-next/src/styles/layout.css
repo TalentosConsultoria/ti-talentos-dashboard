@@ -1,0 +1,284 @@
+@layer layout {
+  .pular {
+    position: absolute;
+    left: var(--s-3);
+    top: -100px;
+    z-index: var(--z-menu);
+    background: var(--aluminio);
+    color: var(--grafite);
+    padding: var(--s-2) var(--s-3);
+    border-radius: var(--raio);
+    font-weight: 600;
+  }
+  .pular:focus {
+    top: var(--s-3);
+  }
+
+  .shell {
+    display: grid;
+    grid-template-columns: var(--largura-sidebar) minmax(0, 1fr);
+    min-height: 100dvh;
+  }
+
+  /* Sidebar ------------------------------------------------------------- */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--trilho);
+    background: var(--grafite);
+    padding: var(--s-5) var(--s-4) var(--s-4);
+  }
+  .marca {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    text-decoration: none;
+    padding: 0 var(--s-2);
+    margin-bottom: var(--s-6);
+  }
+  .marca__selo {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    background: var(--lacre);
+    color: var(--lacre-texto);
+    border-radius: var(--raio);
+    font-weight: 700;
+    font-size: var(--fs-md);
+    letter-spacing: -0.04em;
+  }
+  .marca__nome {
+    display: grid;
+    line-height: 1.2;
+  }
+  .marca__nome strong {
+    font-weight: 600;
+  }
+  .marca__nome span {
+    color: var(--serigrafia);
+    font-size: var(--fs-rotulo);
+    font-family: var(--fonte-dado);
+    letter-spacing: var(--rastreio-rotulo);
+    text-transform: uppercase;
+  }
+
+  .nav {
+    display: grid;
+    gap: var(--s-5);
+  }
+  .nav__grupo h2 {
+    font-size: var(--fs-rotulo);
+    font-family: var(--fonte-dado);
+    font-weight: 500;
+    letter-spacing: var(--rastreio-rotulo);
+    text-transform: uppercase;
+    color: var(--serigrafia);
+    padding: 0 var(--s-2);
+    margin-bottom: var(--s-2);
+  }
+  .nav__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-2);
+    border-radius: var(--raio);
+    color: var(--serigrafia);
+    text-decoration: none;
+    transition: color var(--t-resposta) var(--ease-resposta), background-color var(--t-resposta) var(--ease-resposta);
+  }
+  .nav__link:hover {
+    color: var(--aluminio);
+    background: var(--chassi);
+  }
+  .nav__link[aria-current="page"] {
+    color: var(--aluminio);
+    background: var(--chassi);
+    font-weight: 500;
+  }
+  .nav__link[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--s-4) * -1);
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    background: var(--lacre);
+  }
+  /* No escuro o lacre puro some (1.65:1); clareia mantendo o matiz da marca. */
+  [data-theme="dark"] .nav__link[aria-current="page"]::before {
+    background: color-mix(in srgb, var(--lacre) 72%, #ffffff);
+  }
+  .nav__link svg {
+    flex: none;
+  }
+
+  .sidebar__rodape {
+    margin-top: auto;
+    border-top: 1px solid var(--trilho);
+    padding-top: var(--s-4);
+    display: grid;
+    gap: var(--s-3);
+  }
+  .usuario {
+    display: grid;
+    padding: 0 var(--s-2);
+    min-width: 0;
+  }
+  .usuario strong {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .usuario span {
+    color: var(--serigrafia);
+    font-size: var(--fs-rotulo);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sidebar__acoes {
+    display: flex;
+    gap: var(--s-2);
+  }
+
+  /* Topo mobile ------------------------------------------------------------ */
+  .topo-mobile {
+    display: none;
+  }
+
+  /* Conteúdo ------------------------------------------------------------- */
+  .principal {
+    min-width: 0;
+    padding: var(--s-6) var(--margem) var(--s-7);
+  }
+  .cabecalho {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--s-4) var(--s-5);
+    margin-bottom: var(--s-5);
+  }
+  .cabecalho h1 {
+    font-size: var(--fs-xl);
+  }
+  .cabecalho__contexto {
+    color: var(--serigrafia);
+    margin-top: var(--s-2);
+  }
+  .secao {
+    margin-top: var(--s-6);
+  }
+  .secao > h2 {
+    font-size: var(--fs-md);
+    margin-bottom: var(--s-3);
+  }
+  .secao__nota {
+    color: var(--serigrafia);
+    margin: calc(var(--s-2) * -1) 0 var(--s-4);
+    max-width: var(--medida);
+  }
+
+  .aviso-demo {
+    display: inline-flex;
+    gap: var(--s-2);
+    align-items: center;
+    border: 1px dashed var(--borda-controle);
+    color: var(--serigrafia);
+    padding: 2px var(--s-2);
+    border-radius: var(--raio);
+    margin-bottom: var(--s-4);
+    font-size: var(--fs-rotulo);
+    font-family: var(--fonte-dado);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 960px) {
+    .shell {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .sidebar {
+      display: none;
+    }
+    .topo-mobile {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-cabecalho);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--s-3) var(--margem);
+      background: var(--grafite);
+      border-bottom: 1px solid var(--trilho);
+    }
+    .topo-mobile .marca {
+      margin: 0;
+      padding: 0;
+    }
+    .principal {
+      padding-top: var(--s-5);
+    }
+  }
+
+  /* Gaveta (mobile) */
+  .gaveta__fundo {
+    position: fixed;
+    inset: 0;
+    background: rgb(5 7 9 / 0.6);
+    z-index: var(--z-gaveta);
+    animation: aparecer var(--t-estado) var(--ease-estado);
+  }
+  .gaveta {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(86vw, 300px);
+    z-index: var(--z-gaveta);
+    background: var(--grafite);
+    border-right: 1px solid var(--trilho);
+    display: flex;
+    flex-direction: column;
+    padding: var(--s-5) var(--s-4) var(--s-4);
+    animation: entrar-esquerda var(--t-estado) var(--ease-estado);
+  }
+  .gaveta .marca {
+    margin-bottom: var(--s-6);
+  }
+  .gaveta__fechar {
+    position: absolute;
+    top: var(--s-4);
+    right: var(--s-3);
+  }
+
+  @keyframes aparecer {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes entrar-esquerda {
+    from {
+      transform: translateX(-24px);
+      opacity: 0;
+    }
+  }
+
+  @media print {
+    .sidebar,
+    .topo-mobile,
+    .nao-imprimir,
+    .aviso-demo {
+      display: none !important;
+    }
+    .shell {
+      display: block;
+    }
+    .principal {
+      padding: 0;
+    }
+  }
+}

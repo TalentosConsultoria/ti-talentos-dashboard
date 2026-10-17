@@ -1,0 +1,44 @@
+# PROPOSTA de Blueprint do Render para o portal Next.js.
+# Deploy, DNS e Cloudflare são escopo do Tom Brown; este arquivo é ponto de partida.
+#
+# ATENÇÃO: o repositório TalentosConsultoria/ti-talentos-dashboard hoje tem o app
+# Streamlit na RAIZ. Esta pasta (dashboard-next/) está fora dele. Opções:
+#   a) repositório novo só com dashboard-next (recomendado, rootDir vazio), ou
+#   b) mover dashboard-next/ para dentro do repo e usar rootDir: dashboard-next
+services:
+  - type: web
+    name: ti-talentos-inventario-next
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    # rootDir: dashboard-next   # só na opção (b)
+
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start   # next start lê $PORT do Render
+    healthCheckPath: /api/health  # público, não toca no banco
+
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+
+      # --- Autenticação (fail-closed) ---------------------------------------
+      - key: AUTH_MODE
+        value: cloudflare
+      - key: ENVIRONMENT
+        value: production
+      - key: CF_ACCESS_TEAM_DOMAIN     # ex.: talentos.cloudflareaccess.com
+        sync: false
+      - key: CF_ACCESS_AUD             # AUD tag da Access App
+        sync: false
+      - key: ALLOWED_EMAILS
+        value: informatica@talentosconsultoria.com.br
+      - key: ALLOWED_DOMAIN
+        value: talentosconsultoria.com.br
+
+      # --- Firestore ------------------------------------------------------------
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON   # mesmo valor do serviço Streamlit
+        sync: false

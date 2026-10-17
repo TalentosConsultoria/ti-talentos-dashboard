@@ -1,0 +1,108 @@
+/*
+ * Sistema "Plaqueta" · Inventário de TI Talentos
+ * Tokens nomeados a partir do mundo do patrimônio de TI (chassi, trilho,
+ * alumínio, serigrafia, lacre). Contrastes calculados (WCAG 2.x) no SISTEMA.md.
+ */
+@layer reset, tokens, base, layout, components, utilities;
+
+@layer tokens {
+  :root,
+  [data-theme="dark"] {
+    color-scheme: dark;
+
+    /* Cor: neutros */
+    --grafite: #14171b;          /* fundo da aplicação */
+    --chassi: #1b1f25;           /* superfícies (tabela, painéis) */
+    --chassi-2: #22272e;         /* hover, linha ativa, cabeçalho fixo */
+    --trilho: #2c323a;           /* divisórias (decorativo) */
+    --borda-controle: #68717d;   /* bordas de inputs: 3.35:1 sobre chassi */
+    --aluminio: #e6e8eb;         /* texto primário: 13.48:1 sobre chassi */
+    --serigrafia: #a7a398;       /* texto secundário: 6.57:1 sobre chassi */
+
+    /* Cor: marca (vermelho Talentos), só na plaqueta e na marca */
+    --lacre: #7b1010;
+    --lacre-texto: #fbf7f6;      /* 10.26:1 sobre lacre */
+
+    /* Cor: estados de garantia */
+    --coberto: #86b896;          /* 7.33:1 (saturação 26%) */
+    --atencao: #e9b949;          /* 9.06:1 */
+    --vencida: #e8857a;          /* 6.36:1 */
+    --coberto-fundo: color-mix(in srgb, var(--coberto) 14%, var(--chassi));
+    --atencao-fundo: color-mix(in srgb, var(--atencao) 14%, var(--chassi));
+    --vencida-fundo: color-mix(in srgb, var(--vencida) 14%, var(--chassi));
+
+    /* Régua de garantia */
+    --regua-trilho: #313840;
+    --regua-gasto: #5b6470;
+
+    --foco: #8fb8e8;             /* anel de foco: 8.03:1 */
+    --sombra-menu: 0 12px 32px rgb(5 7 9 / 0.55);
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+    --grafite: #f2f3f5;
+    --chassi: #ffffff;
+    --chassi-2: #e9ebee;
+    --trilho: #d5d9de;
+    --borda-controle: #7e858f;   /* 3.72:1 sobre chassi */
+    --aluminio: #16191d;         /* 17.63:1 */
+    --serigrafia: #5e5a51;       /* 6.87:1 */
+    --lacre: #7b1010;
+    --lacre-texto: #fbf7f6;
+    --coberto: #17683e;          /* 6.13:1 sobre grafite */
+    --atencao: #8a5a00;          /* 5.34:1 */
+    --vencida: #b3261e;          /* 5.89:1 */
+    --regua-trilho: #dde0e4;
+    --regua-gasto: #9aa1aa;
+    --foco: #1f5fad;
+    --sombra-menu: 0 12px 32px rgb(22 25 29 / 0.16);
+  }
+
+  :root {
+    /* Tipo: escala 1.25 (terça maior), base 14px */
+    --fonte-ui: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    --fonte-dado: var(--font-geist-mono), ui-monospace, "Cascadia Mono", Consolas, monospace;
+    --fs-rotulo: 0.7rem;                                         /* 11.2px  n=-1 */
+    --fs-base: 0.875rem;                                         /* 14px    n=0  */
+    --fs-md: 1.0938rem;                                          /* 17.5px  n=1  */
+    --fs-lg: 1.3672rem;                                          /* 21.9px  n=2  */
+    --fs-xl: clamp(1.3672rem, 1.1rem + 0.9vw, 1.709rem);         /* 21.9 a 27.3px n=3 */
+    --fs-metrica: clamp(1.709rem, 1.35rem + 1.1vw, 2.1362rem);   /* 27.3 a 34.2px n=4 */
+    --fs-plaqueta: clamp(2.1362rem, 1.6rem + 1.9vw, 2.6703rem);  /* 34.2 a 42.7px n=5 */
+    --lh-apertado: 1.15;
+    --lh-base: 1.5;
+    --rastreio-rotulo: 0.06em;
+
+    /* Espaço: base 4, progressão não linear */
+    --s-1: 4px;
+    --s-2: 8px;
+    --s-3: 12px;
+    --s-4: 16px;
+    --s-5: 24px;
+    --s-6: 40px;
+    --s-7: 64px;
+    --s-8: 104px;
+    --margem: clamp(16px, 3vw, 40px);
+    --largura-sidebar: 240px;
+    --altura-linha: 44px;
+    --medida: 68ch;
+
+    /* Forma: um raio só, de etiqueta */
+    --raio: 2px;
+
+    /* Movimento */
+    --t-resposta: 160ms;
+    --t-estado: 300ms;
+    --t-regua: 640ms;
+    --ease-resposta: cubic-bezier(0.2, 0, 0, 1);
+    --ease-estado: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-saida: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Camadas */
+    --z-sticky: 2;
+    --z-cabecalho: 10;
+    --z-gaveta: 50;
+    --z-menu: 60;
+  }
+}
