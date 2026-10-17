@@ -78,17 +78,23 @@ def gar_label(row):
 df_data = []
 for r in rows:
     df_data.append({
-        "Controle":  r.get("controle",""),
-        "Tipo":      r.get("tipo",""),
-        "Marca":     r.get("marca",""),
-        "Modelo":    r.get("modelo",""),
-        "Serial":    r.get("serial",""),
-        "Local":     r.get("local",""),
-        "Usuário":   r.get("usuario",""),
-        "Status":    r.get("status",""),
-        "Garantia":  gar_label(r),
-        "Compra":    fmt_date(r.get("data_compra")),
-        "Fornecedor":r.get("fornecedor",""),
+        "Controle":      r.get("controle",""),
+        "Nome":          r.get("nome_dispositivo",""),
+        "Tipo":          r.get("tipo",""),
+        "Marca":         r.get("marca",""),
+        "Modelo":        r.get("modelo",""),
+        "Serial":        r.get("serial",""),
+        "Setor":         r.get("setor",""),
+        "Local":         r.get("local",""),
+        "Usuário":       r.get("usuario",""),
+        "S.O.":          r.get("so",""),
+        "Processador":   r.get("processador",""),
+        "Memória":       r.get("memoria",""),
+        "Disco":         r.get("disco",""),
+        "Status":        r.get("status",""),
+        "Garantia":      gar_label(r),
+        "Compra":        fmt_date(r.get("data_compra")),
+        "Fornecedor":    r.get("fornecedor",""),
     })
 
 if not df_data:
