@@ -13,7 +13,7 @@ services:
     region: oregon
     branch: main
     autoDeploy: true
-    # rootDir: dashboard-next   # só na opção (b)
+    rootDir: dashboard-next
 
     buildCommand: npm ci && npm run build
     startCommand: npm run start   # next start lê $PORT do Render
