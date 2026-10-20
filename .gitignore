@@ -11,6 +11,9 @@ __pycache__/
 *.pem
 *.key
 *.crt
+serviceAccountKey.json
+*serviceAccount*.json
+ficha_*.pdf
 
 # NF-es arquivadas (documentos fiscais — dados sensíveis)
 NF-es/
